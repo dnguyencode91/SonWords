@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Son Nguyen — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+
+<style>
+/* ══════════════════════════════════════════
+   RESET & DESIGN TOKENS
+══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:17px}
+:root{
+  --bg-solid: #09080a;
+  --bg2:      #0f0d08;
+  --bg3:      #161310;
+  --bg4:      #1d1a13;
+  --gold:     #d4a843;
+  --gold-lt:  #e8c46a;
+  --gold-pale:#f2dda0;
+  --white:    #f5ede0;
+  --cream:    #e4d4b8;
+  --muted:    #a89070;
+  --border:   rgba(212,168,67,.26);
+  --border-lt:rgba(212,168,67,.12);
+  /* Gap between sections — wider so eyes can clearly separate */
+  --sec-gap:  48px;
+}
+body{
+  background:#09080a;
+  color:var(--cream);
+  font-family:'Lora',serif;
+  font-size:1rem;
+  line-height:1.78;
+  overflow-x:hidden;
+}
+/* Film-grain overlay */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9000;
+}
+
+/* ══ UTILITIES ══ */
+.label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:block}
+.rule {height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.rule-l{height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.co{position:absolute;border-color:rgba(212,168,67,.45);border-style:solid}
+.co-tl{top:0;left:0;border-width:1px 0 0 1px;width:18px;height:18px}
+.co-tr{top:0;right:0;border-width:1px 1px 0 0;width:18px;height:18px}
+.co-bl{bottom:0;left:0;border-width:0 0 1px 1px;width:18px;height:18px}
+.co-br{bottom:0;right:0;border-width:0 1px 1px 0;width:18px;height:18px}
+.text-gold-grad{
+  background:linear-gradient(135deg,#f2dda0 0%,#d4a843 42%,#b08530 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ══ REVEAL ══ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:translateY(0)}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;transition:background .35s,border-color .35s}
+#nav.scrolled{background:rgba(9,8,10,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.25em;color:var(--gold);text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .22s}
+.nav-links a:hover{color:var(--gold-lt)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--gold);transition:all .3s}
+#mob-nav{display:none;background:rgba(9,8,10,.98);border-bottom:1px solid var(--border)}
+#mob-nav a{display:block;padding:.7rem 2rem;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border-lt);transition:color .2s,background .2s}
+#mob-nav a:hover{color:var(--gold-lt);background:rgba(212,168,67,.04)}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}}
+
+/* ══════════════════════════════════════════
+   HERO — FULL-BLEED WALLPAPER
+══════════════════════════════════════════ */
+#hero{
+  position:relative;width:100vw;height:100vh;min-height:600px;
+  overflow:hidden;display:flex;align-items:flex-end;
+}
+.hero-wallpaper{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 90% 70% at 72% 38%,rgba(120,80,20,.55) 0%,rgba(80,48,8,.3) 35%,transparent 65%),
+    radial-gradient(ellipse 60% 80% at 15% 60%,rgba(60,35,5,.4) 0%,transparent 55%),
+    radial-gradient(ellipse 100% 50% at 50% 100%,rgba(0,0,0,.88) 0%,transparent 55%),
+    radial-gradient(ellipse 80% 40% at 50% 0%,rgba(0,0,0,.7) 0%,transparent 50%),
+    linear-gradient(170deg,#060502 0%,#0c0900 25%,#120e05 55%,#0a0800 100%);
+  filter:contrast(1.04);
+}
+.hero-wallpaper::before{
+  content:'';position:absolute;top:30%;left:40%;right:0;bottom:0;
+  background:radial-gradient(ellipse 70% 60% at 65% 40%,rgba(180,110,20,.18) 0%,transparent 70%);
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to top,rgba(4,3,1,.93) 0%,rgba(4,3,1,.76) 22%,rgba(4,3,1,.35) 50%,rgba(4,3,1,.06) 100%),
+    linear-gradient(to right,rgba(4,3,1,.68) 0%,rgba(4,3,1,.2) 45%,transparent 100%);
+}
+#hero::before{
+  content:'';position:absolute;top:68px;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,rgba(212,168,67,.5) 0%,rgba(212,168,67,.15) 60%,transparent 100%);
+  z-index:3;
+}
+.hero-content{position:relative;z-index:4;width:100%;padding:0 4vw 5.5vh}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.ha{opacity:0;animation:fadeUp .85s ease forwards}
+.ha:nth-child(1){animation-delay:.1s}.ha:nth-child(2){animation-delay:.28s}
+.ha:nth-child(3){animation-delay:.48s}.ha:nth-child(4){animation-delay:.66s}
+.ha:nth-child(5){animation-delay:.84s}
+.hero-eyebrow{
+  font-family:'Cinzel',serif;font-size:clamp(.55rem,1.1vw,.72rem);
+  letter-spacing:.38em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:1rem;display:block;
+}
+.hero-name{
+  font-family:'Cinzel',serif;font-size:clamp(4.5rem,11vw,10rem);
+  font-weight:700;line-height:.95;letter-spacing:.01em;color:#fff;
+  text-shadow:0 2px 40px rgba(0,0,0,.8),0 0 80px rgba(0,0,0,.6);
+}
+.hero-name .gold-word{
+  background:linear-gradient(135deg,#f5e4a8 0%,#d4a843 40%,#c09030 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(212,168,67,.35));
+}
+.hero-rule{height:2px;width:clamp(80px,12vw,200px);background:linear-gradient(90deg,var(--gold),transparent);margin:1.4rem 0}
+.hero-tagline{
+  font-family:'Lora',serif;font-size:clamp(.95rem,1.6vw,1.2rem);
+  color:#f0e0c0;font-style:italic;line-height:1.95;
+  border-left:2.5px solid var(--gold);padding-left:1.1rem;
+  text-shadow:0 1px 12px rgba(0,0,0,.9);max-width:500px;
+}
+.hero-quote{
+  font-family:'Playfair Display',serif;font-size:clamp(.82rem,1.3vw,1rem);
+  font-style:italic;color:rgba(212,168,67,.85);margin-top:1.2rem;
+  text-shadow:0 1px 10px rgba(0,0,0,.9);max-width:460px;
+}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.scroll-cue{animation:bounce 2.2s ease-in-out infinite;margin-top:2rem;display:inline-block}
+@media(max-width:600px){
+  .hero-content{padding:0 6vw 7vh}
+  .hero-tagline{font-size:.9rem}.hero-quote{font-size:.78rem}
+}
+
+/* ══════════════════════════════════════════
+   SECTION SPACING
+   Each .sec-wrap is separated by a clear gap
+   so the eye can comfortably distinguish sections
+══════════════════════════════════════════ */
+section{padding:0}
+.sec-wrap{
+  padding:0;
+  background:var(--bg2);
+}
+/* Gap between consecutive sections */
+.sec-wrap + .sec-wrap{
+  margin-top: var(--sec-gap);
+}
+/* Thin decorative gold line above each subsequent section */
+.sec-wrap + .sec-wrap::before{
+  content:'';
+  display:block;
+  height:1px;
+  background:linear-gradient(90deg,transparent 0%,rgba(212,168,67,.22) 15%,rgba(212,168,67,.22) 85%,transparent 100%);
+  margin-bottom:0;
+}
+
+/* ══════════════════════════════════════════
+   SHARED SLOT PRIMITIVES
+   (used by both the 4-slot grid & BJJ 3-slot)
+══════════════════════════════════════════ */
+.slot-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transition:filter .4s ease;
+}
+/* Diamond pattern on all slots */
+.slot-bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 30 L30 0 L60 30 L30 60 Z' stroke='rgba(212,168,67,0.04)' fill='none'/%3E%3C/svg%3E");
+  background-size:60px 60px;
+}
+.slot-body{position:relative;z-index:2;padding:1.4rem 1.6rem}
+
+/* Gold accent lines */
+.slot-accent-top{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);z-index:3}
+.slot-accent-left{position:absolute;top:0;left:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),transparent);z-index:3}
+
+/* Corner number badge */
+.slot-num{
+  position:absolute;top:1.2rem;right:1.2rem;z-index:3;
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;
+  color:rgba(212,168,67,.4);
+}
+
+/* Typography inside slots */
+.slot-1-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;display:block}
+.slot-1-title{font-family:'Cinzel',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;color:#fff;line-height:1.05;text-shadow:0 2px 20px rgba(0,0,0,.8)}
+.slot-1-sub{font-family:'Lora',serif;font-style:italic;font-size:.9rem;color:var(--muted);margin-top:.55rem;max-width:520px}
+
+.slot-2-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;display:block}
+.slot-2-title{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:600;color:var(--gold-lt);line-height:1.15;margin-bottom:.55rem}
+.slot-2-text{font-size:.9rem;color:var(--cream);line-height:1.78;max-width:340px}
+
+.slot-3-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;display:block}
+.slot-3-title{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--gold-lt);margin-bottom:.4rem}
+.slot-3-text{font-size:.85rem;color:var(--cream);line-height:1.72}
+
+.slot-4-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;display:block}
+.slot-4-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--gold-lt);margin-bottom:.5rem}
+.slot-4-text{font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:.8rem}
+
+/* Interactive CTA button (slot 4 / BJJ slot C) */
+.slot-4-cta{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--bg2);
+  background:linear-gradient(135deg,var(--gold-lt) 0%,var(--gold) 100%);
+  padding:.5rem 1rem;border:none;cursor:pointer;
+  transition:all .3s;position:relative;z-index:3;
+}
+.slot-4-cta:hover{background:linear-gradient(135deg,#f5e0a0 0%,var(--gold-lt) 100%);box-shadow:0 6px 24px rgba(212,168,67,.35);transform:translateY(-1px)}
+.slot-4-cta svg{flex-shrink:0;transition:transform .3s}
+
+/* Hover glow mask on interactive slots */
+.slot-hover-mask{
+  position:absolute;inset:0;z-index:1;
+  background:rgba(212,168,67,.04);
+  opacity:0;transition:opacity .3s;
+}
+
+/* ══════════════════════════════════════════
+   STANDARD 4-SLOT GRID
+   (Business, Writing, Family sections)
+
+   ┌───────────────────────────────────┐
+   │         Slot 1 — full-width       │  row 1
+   ├──────────────────────┬────────────┤
+   │  Slot 2 (tall left)  │  Slot 3   │  rows 2-3 / row 2
+   │                      ├────────────┤
+   │                      │  Slot 4 ✦ │  row 3
+   └──────────────────────┴────────────┘
+══════════════════════════════════════════ */
+.slot-grid{
+  display:grid;
+  grid-template-columns:58fr 42fr;
+  grid-template-rows:260px 340px 200px;
+  gap:3px;
+  background:#09080a;
+}
+/* Slot 1 — full-width banner */
+.slot-1{
+  grid-column:1 / -1;grid-row:1;
+  position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;
+}
+/* Slot 2 — tall left card spanning rows 2 & 3 */
+.slot-2{
+  grid-column:1;grid-row:2 / span 2;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+/* Slot 3 — right top */
+.slot-3{
+  grid-column:2;grid-row:2;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+/* Slot 4 — right bottom, interactive */
+.slot-4{
+  grid-column:2;grid-row:3;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  cursor:pointer;
+}
+.slot-4:hover .slot-bg{filter:brightness(1.18)}
+.slot-4:hover .slot-hover-mask{opacity:1}
+.slot-4:hover .slot-4-cta svg{transform:translateX(3px)}
+
+/* Default bg for standard slots */
+.slot-1 .slot-bg{
+  background-color:var(--bg3);
+  background-image:radial-gradient(ellipse 80% 60% at 50% 60%,rgba(120,80,12,.45) 0%,transparent 70%),linear-gradient(180deg,rgba(9,8,10,.3) 0%,rgba(9,8,10,.85) 100%);
+}
+.slot-2 .slot-bg{
+  background-color:#0f0c07;
+  background-image:radial-gradient(ellipse 100% 60% at 50% 80%,rgba(100,65,10,.4) 0%,transparent 65%),linear-gradient(0deg,rgba(9,8,10,.92) 0%,rgba(9,8,10,.3) 60%,transparent 100%);
+}
+.slot-3 .slot-bg{
+  background-color:#12100b;
+  background-image:radial-gradient(ellipse 100% 80% at 50% 90%,rgba(80,52,8,.5) 0%,transparent 65%),linear-gradient(0deg,rgba(9,8,10,.94) 0%,rgba(9,8,10,.4) 100%);
+}
+.slot-4 .slot-bg{
+  background-color:#0d0b07;
+  background-image:radial-gradient(ellipse 100% 80% at 50% 90%,rgba(90,58,10,.55) 0%,transparent 65%),linear-gradient(0deg,rgba(9,8,10,.96) 0%,rgba(9,8,10,.5) 100%);
+}
+
+/* Padding overrides */
+.slot-1 .slot-body{padding:2rem 2.5rem}
+.slot-2 .slot-body{padding:1.6rem 1.8rem}
+
+/* Mobile: stack all 4 slots */
+@media(max-width:768px){
+  .slot-grid{grid-template-columns:1fr;grid-template-rows:220px 320px 280px 220px}
+  .slot-1,.slot-2,.slot-3,.slot-4{grid-column:1}
+  .slot-1{grid-row:1}.slot-2{grid-row:2}.slot-3{grid-row:3}.slot-4{grid-row:4}
+}
+
+/* ══════════════════════════════════════════
+   BJJ — CUSTOM 3-SLOT GRID
+   Matches the reference image exactly:
+
+   ┌───────────────────────────────────┐
+   │       Slot A — full-width "2"     │  tall top row
+   ├────────────────────────┬──────────┤
+   │  Slot B — wider  "4"   │ Slot C ✦ │  bottom row
+   │                        │   "5"    │
+   └────────────────────────┴──────────┘
+
+   Proportions: top ~42% height / bottom ~58%
+   Columns: left 60% / right 40%  (matches wider "4" vs narrower "5")
+══════════════════════════════════════════ */
+.bjj-grid{
+  display:grid;
+  grid-template-columns: 60fr 40fr;       /* "4" wider, "5" narrower */
+  grid-template-rows: 260px 360px;        /* top banner / bottom two cells */
+  gap:4px;
+  background:#09080a;
+}
+
+/* Slot A — full-width top (the "2" in the image) */
+.bjj-slot-a{
+  grid-column: 1 / -1;   /* spans both columns */
+  grid-row: 1;
+  position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;
+}
+
+/* Slot B — bottom-left, wider (the "4" in the image) */
+.bjj-slot-b{
+  grid-column: 1;
+  grid-row: 2;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+
+/* Slot C — bottom-right, narrower, interactive (the "5" in the image) */
+.bjj-slot-c{
+  grid-column: 2;
+  grid-row: 2;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  cursor:pointer;
+}
+.bjj-slot-c:hover .slot-bg{filter:brightness(1.18)}
+.bjj-slot-c:hover .slot-hover-mask{opacity:1}
+.bjj-slot-c:hover .slot-4-cta svg{transform:translateX(3px)}
+
+/* Slot backgrounds — BJJ amber/dark tones */
+.bjj-slot-a .slot-bg{
+  background-color:#0c0a06;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 65%,rgba(100,62,10,.65) 0%,transparent 65%),
+    linear-gradient(180deg,rgba(9,8,10,.18) 0%,rgba(9,8,10,.88) 100%);
+}
+.bjj-slot-b .slot-bg{
+  background-color:#0c0a05;
+  background-image:
+    radial-gradient(ellipse 100% 55% at 50% 100%,rgba(90,55,6,.55) 0%,transparent 62%),
+    linear-gradient(0deg,rgba(9,8,10,.95) 0%,transparent 100%);
+}
+.bjj-slot-c .slot-bg{
+  background-color:#0b0906;
+  background-image:
+    radial-gradient(ellipse 100% 55% at 50% 100%,rgba(85,52,6,.62) 0%,transparent 65%),
+    linear-gradient(0deg,rgba(9,8,10,.97) 0%,rgba(9,8,10,.5) 100%);
+}
+
+/* Mobile: stack all 3 */
+@media(max-width:768px){
+  .bjj-grid{grid-template-columns:1fr;grid-template-rows:220px 300px 300px}
+  .bjj-slot-a{grid-column:1;grid-row:1}
+  .bjj-slot-b{grid-column:1;grid-row:2}
+  .bjj-slot-c{grid-column:1;grid-row:3}
+}
+
+/* ══ BJJ belt widget ══ */
+.belt-mini{display:flex;align-items:center;gap:.6rem;margin-top:.75rem}
+.belt-bar-mini{
+  height:7px;flex:1;max-width:120px;
+  background:#0a0a0a;border-radius:2px;
+  position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 4px rgba(0,0,0,.7);
+}
+.belt-bar-mini::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;
+  width:24px;background:linear-gradient(90deg,transparent,var(--gold));
+}
+.belt-label-mini{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* ══════════════════════════════════════════
+   FULL-SCREEN DETAIL MODAL
+══════════════════════════════════════════ */
+.detail-modal{
+  position:fixed;inset:0;z-index:800;
+  background:rgba(6,5,3,.97);
+  backdrop-filter:blur(12px);
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;
+  transition:opacity .45s ease;
+  overflow-y:auto;
+}
+.detail-modal.open{opacity:1;pointer-events:all}
+
+.modal-inner{
+  max-width:860px;margin:0 auto;
+  padding:5rem 3rem 4rem;
+  animation:fadeUp .5s ease both;
+}
+@media(max-width:600px){.modal-inner{padding:4rem 1.4rem 3rem}}
+
+.modal-close{
+  position:fixed;top:1.5rem;right:2rem;z-index:810;
+  display:flex;align-items:center;gap:.6rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--border);
+  padding:.55rem 1rem;cursor:pointer;transition:all .25s;
+  backdrop-filter:blur(8px);background:rgba(9,8,10,.8);
+}
+.modal-close:hover{color:var(--gold-lt);background:rgba(212,168,67,.07)}
+
+.modal-eyebrow{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:.8rem}
+.modal-title{font-family:'Cinzel',serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1.2rem}
+.modal-rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:2rem}
+
+.modal-article h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold-lt);margin:2rem 0 .6rem;padding-top:1.4rem;border-top:1px solid var(--border-lt)}
+.modal-article h3:first-child{border-top:none;padding-top:0;margin-top:0}
+.modal-article p{font-family:'Lora',serif;font-size:.95rem;color:var(--cream);line-height:1.88;margin-bottom:.9rem}
+.modal-article em{color:var(--gold-pale);font-style:italic}
+.modal-article blockquote{
+  border-left:2.5px solid var(--gold);padding:.8rem 1.2rem;
+  margin:1.2rem 0;background:rgba(212,168,67,.04);
+  font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;
+  color:var(--cream);line-height:1.82;
+}
+.modal-tag{
+  display:inline-block;font-family:'Cinzel',serif;font-size:.52rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--bg2);background:var(--gold);
+  padding:.22rem .6rem;margin:.1rem .2rem .6rem 0;
+}
+
+/* ══════════════════════════════════════════
+   CONTACT SECTION
+══════════════════════════════════════════ */
+.contact-sec{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg-solid) 100%);padding:4.5rem 0;margin-top:var(--sec-gap)}
+.contact-grid{display:grid;grid-template-columns:3fr 2fr;gap:2.5rem;max-width:1180px;margin:0 auto;padding:0 2rem}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr}}
+
+.sec-head{margin-bottom:2.5rem}
+.sec-head h2{font-family:'Cinzel',serif;font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:600;margin-top:.4rem}
+.divider{display:flex;align-items:center;gap:.9rem;max-width:200px;margin:.8rem 0 0}
+.divider span{flex:1;height:1px}
+.divider span:first-child{background:linear-gradient(90deg,transparent,rgba(212,168,67,.4))}
+.divider span:last-child{background:linear-gradient(270deg,transparent,rgba(212,168,67,.4))}
+.divider em{font-style:normal;color:var(--gold);font-size:.65rem}
+
+.form-wrap{background:linear-gradient(145deg,var(--bg3),var(--bg2));border:1px solid var(--border);padding:1.75rem;position:relative}
+.form-group{margin-bottom:1.1rem}
+.form-label{display:block;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.form-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(212,168,67,.2);color:var(--white);font-family:'Lora',serif;font-size:.95rem;padding:.7rem .9rem;outline:none;border-radius:1px;transition:border-color .25s,box-shadow .25s}
+.form-input::placeholder{color:rgba(228,212,184,.28)}
+.form-input:focus{border-color:rgba(212,168,67,.55);box-shadow:0 0 0 3px rgba(212,168,67,.07)}
+textarea.form-input{resize:vertical;min-height:105px}
+.btn-submit{width:100%;padding:.85rem;background:linear-gradient(135deg,#d4a843 0%,#a87e2a 100%);color:#080700;font-family:'Cinzel',serif;font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;border:none;cursor:pointer;border-radius:1px;transition:all .28s}
+.btn-submit:hover{background:linear-gradient(135deg,#e8c46a 0%,#d4a843 100%);box-shadow:0 8px 26px rgba(212,168,67,.3);transform:translateY(-1px)}
+
+.soc-list{list-style:none}
+.soc-item{display:flex;align-items:center;gap:.9rem;padding:.8rem .9rem;border:1px solid var(--border-lt);margin-bottom:.55rem;text-decoration:none;color:var(--cream);font-family:'Lora',serif;font-size:.93rem;transition:all .22s}
+.soc-item:hover{color:var(--gold-lt);border-color:var(--border);background:rgba(212,168,67,.04)}
+.soc-icon{width:32px;height:32px;background:rgba(212,168,67,.1);border:1px solid var(--border-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ══ FOOTER ══ */
+footer{padding:2.2rem 2rem;border-top:1px solid var(--border-lt);text-align:center;background:var(--bg-solid)}
+.f-logo{font-family:'Cinzel',serif;font-size:.88rem;letter-spacing:.25em;color:var(--gold)}
+.f-sub{font-size:.8rem;color:var(--muted);margin:.3rem 0}
+.f-copy{font-size:.72rem;color:rgba(168,144,112,.32);margin-top:.3rem}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">SON NGUYEN</a>
+    <ul class="nav-links">
+      <li><a href="#business">Business</a></li>
+      <li><a href="#bjj">BJJ</a></li>
+      <li><a href="#writing">Writing</a></li>
+      <li><a href="#family">Family</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="ham">
+      <span id="hb1"></span><span id="hb2"></span><span id="hb3"></span>
+    </div>
+  </div>
+  <div id="mob-nav">
+    <a href="#business">Business</a>
+    <a href="#bjj">BJJ</a>
+    <a href="#writing">Writing</a>
+    <a href="#family">Family</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     HERO — FULL-BLEED WALLPAPER
+══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-wallpaper"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow ha">Nguyễn Đức Ân Sơn</span>
+    <h1 class="hero-name ha"><span class="gold-word">Son</span><br/>Nguyen</h1>
+    <div class="hero-rule ha"></div>
+    <p class="hero-tagline ha">
+      Đai đen BJJ &nbsp;·&nbsp; Nhà buôn phân bón<br/>
+      Nhà văn thời vụ &nbsp;·&nbsp; Nhà đầu tư thiên thần
+    </p>
+    <p class="hero-quote ha">"A Black Belt is a White Belt Who Never Gives Up"</p>
+    <div class="scroll-cue ha">
+      <svg width="18" height="30" viewBox="0 0 18 30" fill="none">
+        <rect x="1" y="1" width="16" height="28" rx="8" stroke="rgba(212,168,67,.55)" stroke-width="1.2"/>
+        <circle cx="9" cy="9" r="3" fill="rgba(212,168,67,.8)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION: BUSINESS & INVESTMENT
+     Standard 4-slot grid
+══════════════════════════════════════════ -->
+<section id="business" class="sec-wrap">
+  <div class="slot-grid reveal">
+
+    <!-- Slot 1: Banner -->
+    <div class="slot-1">
+      <div class="slot-bg"></div>
+      <div class="slot-accent-top"></div>
+      <div class="slot-body">
+        <span class="slot-1-label">Portfolio</span>
+        <h2 class="slot-1-title">Business &amp;<br/>Investment</h2>
+        <p class="slot-1-sub">Thương mại — Đầu tư thiên thần — Kinh tế xanh</p>
+      </div>
+      <div class="slot-num">01</div>
+    </div>
+
+    <!-- Slot 2: PVChem (tall left) -->
+    <div class="slot-2">
+      <div class="slot-bg"></div>
+      <div class="slot-accent-left"></div>
+      <div class="slot-body">
+        <span class="slot-2-label">Fertiliser Trading</span>
+        <h3 class="slot-2-title">PVChem</h3>
+        <p class="slot-2-text">Kinh doanh phân bón chiến lược với mạng lưới phân phối trải rộng. PVChem là nền tảng thương mại cốt lõi — nơi kinh nghiệm thực chiến gặp gỡ tầm nhìn dài hạn trong ngành nông nghiệp Việt Nam và khu vực.</p>
+      </div>
+      <div class="slot-num">02</div>
+    </div>
+
+    <!-- Slot 3: NSEC (right top) -->
+    <div class="slot-3">
+      <div class="slot-bg"></div>
+      <div class="slot-body">
+        <span class="slot-3-label">Angel Investment</span>
+        <h3 class="slot-3-title">NSEC</h3>
+        <p class="slot-3-text">Cánh tay đầu tư chiến lược, tập trung vào doanh nghiệp giai đoạn tăng trưởng. Triết lý: đầu tư vào con người trước khi đầu tư vào con số.</p>
+      </div>
+      <div class="slot-num">03</div>
+    </div>
+
+    <!-- Slot 4: rPET (right bottom, interactive) -->
+    <div class="slot-4" onclick="openModal('business')">
+      <div class="slot-bg"></div>
+      <div class="slot-hover-mask"></div>
+      <div class="slot-body">
+        <span class="slot-4-label">Green Impact</span>
+        <h3 class="slot-4-title">rPET Recycling</h3>
+        <p class="slot-4-text">Dự án tái chế nhựa rPET — cam kết bền vững...</p>
+        <button class="slot-4-cta" aria-label="Xem chi tiết Business">
+          Xem Chi Tiết
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="slot-num">04</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION: BJJ
+     Custom 3-slot grid matching reference image:
+     ┌──────────────────────────────┐
+     │   Slot A — full-width top    │  ← "2"
+     ├────────────────────┬─────────┤
+     │  Slot B — wider    │ Slot C  │  ← "4" and "5"
+     └────────────────────┴─────────┘
+══════════════════════════════════════════ -->
+<section id="bjj" class="sec-wrap">
+  <div class="bjj-grid reveal">
+
+    <!-- Slot A: Full-width banner (the "2") -->
+    <div class="bjj-slot-a">
+      <div class="slot-bg"></div>
+      <div class="slot-accent-top"></div>
+      <div class="slot-body" style="padding:2rem 2.5rem">
+        <span class="slot-1-label">Martial Arts</span>
+        <h2 class="slot-1-title">Brazilian Jiu-Jitsu</h2>
+        <p class="slot-1-sub">Equipe Mestre Wilson · Đai đen · Tho Kimura</p>
+      </div>
+      <div class="slot-num">01</div>
+    </div>
+
+    <!-- Slot B: Academy + Philosophy — wider bottom-left (the "4") -->
+    <div class="bjj-slot-b">
+      <div class="slot-bg"></div>
+      <div class="slot-accent-left"></div>
+      <div class="slot-body" style="padding:1.6rem 1.8rem">
+        <span class="slot-2-label">Academy &amp; Philosophy</span>
+        <h3 class="slot-2-title">Equipe Mestre Wilson<br/>Jiu-Jitsu Australia</h3>
+        <p class="slot-2-text">Ngôi nhà thứ hai trên thảm đấu xứ sở kangaroo. Nơi kỷ luật gặp gỡ sự tôn trọng — mỗi buổi tập là một bước đi trên hành trình đai đen. Nghệ thuật nhu đạo dạy ta cách thua để học cách thắng.</p>
+        <div class="belt-mini">
+          <div class="belt-bar-mini"></div>
+          <span class="belt-label-mini">Black Belt</span>
+        </div>
+      </div>
+      <div class="slot-num">02</div>
+    </div>
+
+    <!-- Slot C: Tho Kimura — narrower bottom-right, interactive (the "5") -->
+    <div class="bjj-slot-c" onclick="openModal('bjj')">
+      <div class="slot-bg"></div>
+      <div class="slot-hover-mask"></div>
+      <div class="slot-body" style="padding:1.6rem 1.8rem">
+        <span class="slot-4-label">Signature Move</span>
+        <h3 class="slot-4-title">木 Tho Kimura</h3>
+        <p class="slot-4-text">Kỹ thuật đặc trưng mang dấu ấn cá nhân — tinh tế, bất ngờ và dứt khoát khi thời cơ đến...</p>
+        <button class="slot-4-cta" aria-label="Xem chi tiết BJJ">
+          Xem Chi Tiết
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="slot-num">03</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION: WRITING & PHILOSOPHY
+     Standard 4-slot grid
+══════════════════════════════════════════ -->
+<section id="writing" class="sec-wrap">
+  <div class="slot-grid reveal">
+
+    <!-- Slot 1: Banner -->
+    <div class="slot-1">
+      <div class="slot-bg" style="background-color:#0a0805;background-image:radial-gradient(ellipse 80% 60% at 40% 60%,rgba(90,55,8,.5) 0%,transparent 65%),linear-gradient(180deg,rgba(9,8,10,.2) 0%,rgba(9,8,10,.9) 100%)"></div>
+      <div class="slot-accent-top"></div>
+      <div class="slot-body">
+        <span class="slot-1-label">Văn Chương</span>
+        <h2 class="slot-1-title">Writing &amp;<br/>Philosophy</h2>
+        <p class="slot-1-sub">Hồi ký · Tản văn · Góc nhìn hai chiều</p>
+      </div>
+      <div class="slot-num">01</div>
+    </div>
+
+    <!-- Slot 2: Trung Thu (tall left) -->
+    <div class="slot-2">
+      <div class="slot-bg" style="background-color:#0d0a05;background-image:radial-gradient(ellipse 100% 55% at 50% 100%,rgba(95,60,5,.5) 0%,transparent 62%),linear-gradient(0deg,rgba(9,8,10,.95) 0%,transparent 100%)"></div>
+      <div class="slot-accent-left"></div>
+      <div class="slot-body">
+        <span class="slot-2-label">Tản Văn</span>
+        <h3 class="slot-2-title">🏮 Trung Thu</h3>
+        <p class="slot-2-text">Mùi bánh nướng, ánh đèn lồng lung linh đêm thu Sài Gòn — những ký ức theo tôi suốt hành trình sang Australia. Viết về Trung Thu là viết về sợi chỉ vô hình nối người xa xứ với quê hương.</p>
+      </div>
+      <div class="slot-num">02</div>
+    </div>
+
+    <!-- Slot 3: Melbourne vs Saigon (right top) -->
+    <div class="slot-3">
+      <div class="slot-bg" style="background-color:#0e0c07;background-image:radial-gradient(ellipse 100% 80% at 50% 100%,rgba(75,48,6,.55) 0%,transparent 65%),linear-gradient(0deg,rgba(9,8,10,.94) 0%,rgba(9,8,10,.4) 100%)"></div>
+      <div class="slot-body">
+        <span class="slot-3-label">Đối Chiếu</span>
+        <h3 class="slot-3-title">✈️ Melbourne vs. Saigon</h3>
+        <p class="slot-3-text">Hai thành phố, hai nhịp sống, một trái tim. Không phải chọn một, mà là học cách là cả hai.</p>
+      </div>
+      <div class="slot-num">03</div>
+    </div>
+
+    <!-- Slot 4: Philosophy (right bottom, interactive) -->
+    <div class="slot-4" onclick="openModal('writing')">
+      <div class="slot-bg" style="background-color:#0b0905;background-image:radial-gradient(ellipse 100% 80% at 50% 100%,rgba(88,55,6,.6) 0%,transparent 65%),linear-gradient(0deg,rgba(9,8,10,.97) 0%,rgba(9,8,10,.5) 100%)"></div>
+      <div class="slot-hover-mask"></div>
+      <div class="slot-body">
+        <span class="slot-4-label">Triết Lý</span>
+        <h3 class="slot-4-title">Nhà văn thời vụ</h3>
+        <p class="slot-4-text">Viết không phải để được nhớ đến...</p>
+        <button class="slot-4-cta" aria-label="Xem chi tiết Writing">
+          Xem Chi Tiết
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="slot-num">04</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION: FAMILY & LIFESTYLE
+     Standard 4-slot grid
+══════════════════════════════════════════ -->
+<section id="family" class="sec-wrap">
+  <div class="slot-grid reveal">
+
+    <!-- Slot 1: Banner -->
+    <div class="slot-1">
+      <div class="slot-bg" style="background-color:#09080a;background-image:radial-gradient(ellipse 80% 60% at 55% 55%,rgba(70,40,90,.3) 0%,transparent 65%),linear-gradient(180deg,rgba(9,8,10,.25) 0%,rgba(9,8,10,.88) 100%)"></div>
+      <div class="slot-accent-top"></div>
+      <div class="slot-body">
+        <span class="slot-1-label">Life</span>
+        <h2 class="slot-1-title">Family &amp;<br/>Lifestyle</h2>
+        <p class="slot-1-sub">Melbourne · Vietnam · Hà Lê · Jim Nguyen</p>
+      </div>
+      <div class="slot-num">01</div>
+    </div>
+
+    <!-- Slot 2: Melbourne / Vietnam (tall left) -->
+    <div class="slot-2">
+      <div class="slot-bg" style="background-color:#0a0809;background-image:radial-gradient(ellipse 100% 55% at 50% 100%,rgba(60,35,80,.4) 0%,transparent 62%),linear-gradient(0deg,rgba(9,8,10,.95) 0%,transparent 100%)"></div>
+      <div class="slot-accent-left"></div>
+      <div class="slot-body">
+        <span class="slot-2-label">Home</span>
+        <h3 class="slot-2-title">🇦🇺 Melbourne<br/>↔ Vietnam 🇻🇳</h3>
+        <p class="slot-2-text">Sống giữa hai bờ không phải là sự lưỡng lự — đó là đặc ân. Melbourne cho tôi không gian để tư duy; Việt Nam cho tôi hồn để cảm nhận. Cả hai tạo nên một con người hoàn chỉnh.</p>
+      </div>
+      <div class="slot-num">02</div>
+    </div>
+
+    <!-- Slot 3: Hà Lê (right top) -->
+    <div class="slot-3">
+      <div class="slot-bg" style="background-color:#0c0a0b;background-image:radial-gradient(ellipse 100% 80% at 50% 100%,rgba(75,35,65,.45) 0%,transparent 65%),linear-gradient(0deg,rgba(9,8,10,.94) 0%,rgba(9,8,10,.4) 100%)"></div>
+      <div class="slot-body">
+        <span class="slot-3-label">Partner</span>
+        <h3 class="slot-3-title">♥ Hà Lê</h3>
+        <p class="slot-3-text">Người phụ nữ chọn là nền tảng. Lý do những chuyến đi xa luôn có điểm để trở về.</p>
+      </div>
+      <div class="slot-num">03</div>
+    </div>
+
+    <!-- Slot 4: Jim Nguyen (right bottom, interactive) -->
+    <div class="slot-4" onclick="openModal('family')">
+      <div class="slot-bg" style="background-color:#0a0809;background-image:radial-gradient(ellipse 100% 80% at 50% 100%,rgba(65,32,70,.55) 0%,transparent 65%),linear-gradient(0deg,rgba(9,8,10,.97) 0%,rgba(9,8,10,.5) 100%)"></div>
+      <div class="slot-hover-mask"></div>
+      <div class="slot-body">
+        <span class="slot-4-label">Next Generation</span>
+        <h3 class="slot-4-title">Jim Nguyen</h3>
+        <p class="slot-4-text">Real Estate · Melbourne...</p>
+        <button class="slot-4-cta" aria-label="Xem chi tiết Family">
+          Xem Chi Tiết
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="slot-num">04</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════ -->
+<div class="contact-sec" id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="sec-head reveal">
+        <span class="label">Liên Hệ</span>
+        <h2 class="text-gold-grad" style="font-family:'Cinzel',serif">Get In Touch</h2>
+        <div class="divider"><span></span><em>✦</em><span></span></div>
+        <p style="margin-top:.9rem;font-size:.92rem;color:var(--muted);line-height:1.8;">
+          Dù là hợp tác kinh doanh, đàm đạo võ thuật, hay trao đổi về tản văn — cánh cửa luôn mở.
+        </p>
+      </div>
+      <div class="form-wrap reveal">
+        <div class="co co-tl"></div><div class="co co-br"></div>
+        <div class="form-group">
+          <label class="form-label">Tên của bạn</label>
+          <input type="text" class="form-input" placeholder="Nguyễn Văn A"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="your@email.com"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Chủ đề</label>
+          <input type="text" class="form-input" placeholder="Business / BJJ / Writing / ..."/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tin nhắn</label>
+          <textarea class="form-input" placeholder="Xin chào Son..."></textarea>
+        </div>
+        <button type="button" class="btn-submit" id="submitBtn">Gửi Tin Nhắn</button>
+      </div>
+    </div>
+    <div class="reveal" style="padding-top:1rem">
+      <span class="label" style="margin-bottom:1rem;">Social &amp; Links</span>
+      <ul class="soc-list" style="margin-top:.8rem">
+        <li><a href="#" class="soc-item">
+          <div class="soc-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+            </svg>
+          </div>LinkedIn
+        </a></li>
+        <li><a href="#" class="soc-item">
+          <div class="soc-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </div>Facebook
+        </a></li>
+        <li><a href="mailto:son@sonnguyen.com" class="soc-item">
+          <div class="soc-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>son@sonnguyen.com
+        </a></li>
+      </ul>
+      <div class="rule" style="margin:1.4rem 0;opacity:.18"></div>
+      <span class="label" style="margin-bottom:.7rem">Locations</span>
+      <div style="display:flex;flex-direction:column;gap:.55rem;font-size:.93rem;color:var(--cream);margin-top:.7rem">
+        <span>🏠 Melbourne, Victoria, Australia</span>
+        <span>🏢 Ho Chi Minh City, Vietnam</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p class="f-logo">SON NGUYEN</p>
+  <p class="f-sub">Nguyễn Đức Ân Sơn &nbsp;·&nbsp; Melbourne, Australia</p>
+  <div class="divider" style="margin:.5rem auto .7rem">
+    <span></span><em style="color:var(--gold);font-size:.6rem;font-style:normal">✦</em><span></span>
+  </div>
+  <p class="f-sub" style="opacity:.45;font-size:.75rem">
+    Đai đen BJJ &nbsp;·&nbsp; Nhà buôn phân bón &nbsp;·&nbsp; Nhà văn thời vụ &nbsp;·&nbsp; Nhà đầu tư thiên thần
+  </p>
+  <p class="f-copy">© 2025 Son Nguyen. Crafted with precision.</p>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     DETAIL MODALS
+══════════════════════════════════════════ -->
+
+<!-- MODAL: Business -->
+<div class="detail-modal" id="modal-business" role="dialog" aria-modal="true" aria-label="Business Detail">
+  <button class="modal-close" onclick="closeModal('business')">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Quay Lại Tổng Quan
+  </button>
+  <div class="modal-inner">
+    <span class="modal-eyebrow">Portfolio · Business &amp; Investment</span>
+    <h2 class="modal-title">Business &amp; Investment</h2>
+    <div class="modal-rule"></div>
+    <div class="modal-article">
+      <span class="modal-tag">Trading</span><span class="modal-tag">Investment</span><span class="modal-tag">Green Economy</span>
+
+      <h3>⚗️ PVChem — Fertiliser Trading</h3>
+      <p>PVChem là nền tảng thương mại cốt lõi trong hành trình kinh doanh của Son Nguyen. Với mạng lưới phân phối phân bón trải rộng trên nhiều tỉnh thành Việt Nam, PVChem không chỉ là một doanh nghiệp — đó là minh chứng cho triết lý "thương trường như võ đài".</p>
+      <p>Kinh nghiệm thực chiến trong ngành phân bón đã rèn luyện khả năng đọc thị trường, đàm phán, và xây dựng quan hệ đối tác bền vững. Mỗi hợp đồng là một trận đấu đòi hỏi kỹ thuật và bản lĩnh — không khác gì trên thảm Jiu-Jitsu.</p>
+      <blockquote>"Thương trường như võ đài — kỷ luật, kiên nhẫn, và không bao giờ bỏ cuộc."</blockquote>
+
+      <h3>📈 NSEC — Angel Investment</h3>
+      <p>NSEC là cánh tay đầu tư thiên thần, tập trung vào các doanh nghiệp Việt Nam ở giai đoạn tăng trưởng sớm. Triết lý đầu tư của Son Nguyen rất đơn giản nhưng sâu sắc: <em>đầu tư vào con người trước khi đầu tư vào con số.</em></p>
+      <p>Là một nhà đầu tư, Son không chỉ rót vốn mà còn trở thành người cố vấn — chia sẻ những bài học từ thương trường, từ võ đường, và từ hành trình sống giữa hai nền văn hóa. Giá trị thực sự của một khoản đầu tư nằm ở sự đồng hành, không chỉ ở tờ séc.</p>
+
+      <h3>♻️ rPET Recycling — Kinh Tế Xanh</h3>
+      <p>Dự án tái chế nhựa rPET là cam kết của Son Nguyen với một tương lai bền vững. Trong một thế giới đang ngập chìm trong rác thải nhựa, dự án này không chỉ có ý nghĩa kinh tế mà còn mang ý nghĩa đạo đức và môi trường sâu sắc.</p>
+      <p>Từ nuôi đất bằng phân bón (PVChem) đến cứu biển bằng tái chế nhựa (rPET) — hành trình kinh doanh của Son Nguyen phản ánh một vòng tròn trách nhiệm với thiên nhiên và cộng đồng. <em>Kinh doanh không chỉ là tạo ra lợi nhuận, mà là để lại di sản.</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: BJJ -->
+<div class="detail-modal" id="modal-bjj" role="dialog" aria-modal="true" aria-label="BJJ Detail">
+  <button class="modal-close" onclick="closeModal('bjj')">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Quay Lại Tổng Quan
+  </button>
+  <div class="modal-inner">
+    <span class="modal-eyebrow">Martial Arts · Brazilian Jiu-Jitsu</span>
+    <h2 class="modal-title">Brazilian Jiu-Jitsu</h2>
+    <div class="modal-rule"></div>
+    <div class="modal-article">
+      <span class="modal-tag">Black Belt</span><span class="modal-tag">Australia</span><span class="modal-tag">Kimura</span>
+
+      <h3>🥋 Đai Đen — Hành Trình Không Bỏ Cuộc</h3>
+      <p>Đai đen BJJ không phải là đích đến — đó là một chương mới bắt đầu. Hành trình từ đai trắng đến đai đen của Son Nguyen không được đo bằng số năm hay số trận thắng, mà bằng số lần đứng dậy sau khi tap out.</p>
+      <blockquote>"A Black Belt is a White Belt Who Never Gives Up."</blockquote>
+      <p>Mỗi sáng trước khi mở hàng phân bón, mỗi buổi tối sau những cuộc đàm phán căng thẳng — thảm đấu là nơi Son Nguyen tìm lại sự rõ ràng. <em>Jiu-jitsu không phải là môn thể thao, đó là cách sống.</em></p>
+
+      <h3>🏛️ Equipe Mestre Wilson Jiu-Jitsu Australia</h3>
+      <p>Equipe Mestre Wilson là ngôi nhà thứ hai của Son trên xứ sở kangaroo. Đây là nơi không chỉ rèn luyện kỹ thuật mà còn xây dựng tính cách — nơi những người đồng môn đến từ mọi nền văn hóa cùng nhau học cách khiêm tốn trước kẻ mạnh hơn.</p>
+      <p>Trên thảm đấu, không có đặc quyền của thương gia hay nhà đầu tư. Chỉ có kỹ thuật, hơi thở, và tôn trọng. Đó là điều Son Nguyen trân trọng nhất về võ đường này.</p>
+
+      <h3>木 Tho Kimura — Kỹ Thuật Đặc Trưng</h3>
+      <p>"Tho Kimura" — cái tên Son tự đặt cho biến thể Kimura yêu thích của mình. Như người bạn cũ đáng tin cậy, kỹ thuật này luôn hiện diện khi cần nhất: tinh tế trong cách vào đòn, bất ngờ trong cách kết thúc.</p>
+      <p>Trong Jiu-jitsu, mỗi võ sĩ đều tìm được một kỹ thuật "của mình" — phản ánh tính cách, tư duy, và phong cách chiến đấu. <em>Tho Kimura là Son Nguyen trên thảm đấu: kiên nhẫn, chiến lược, và dứt khoát khi thời cơ đến.</em></p>
+
+      <h3>🌏 Gentle Art — Triết Lý Cuộc Sống</h3>
+      <p>Gentle Art — Nghệ thuật Nhu đạo. Không phải ngẫu nhiên mà Jiu-jitsu được gọi như vậy. Đây là môn võ dạy ta rằng không cần sức mạnh để chiến thắng — cần trí tuệ, kỹ thuật, và đặc biệt là sự kiên nhẫn.</p>
+      <p>Những bài học trên thảm đấu theo Son vào mọi cuộc đàm phán thương mại, mọi quyết định đầu tư, và mọi trang viết: <em>đôi khi, cách tốt nhất để chiến thắng là biết lùi đúng lúc, tích lũy vị thế, và chờ thời cơ.</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Writing -->
+<div class="detail-modal" id="modal-writing" role="dialog" aria-modal="true" aria-label="Writing Detail">
+  <button class="modal-close" onclick="closeModal('writing')">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Quay Lại Tổng Quan
+  </button>
+  <div class="modal-inner">
+    <span class="modal-eyebrow">Văn Chương · Writing &amp; Philosophy</span>
+    <h2 class="modal-title">Writing &amp; Philosophy</h2>
+    <div class="modal-rule"></div>
+    <div class="modal-article">
+      <span class="modal-tag">Tản Văn</span><span class="modal-tag">Hồi Ký</span><span class="modal-tag">Triết Lý</span>
+
+      <h3>🏮 Trung Thu — Ký Ức Và Sợi Chỉ Vô Hình</h3>
+      <p>Mùi bánh nướng bánh dẻo, ánh đèn lồng lung linh trong đêm thu Sài Gòn, tiếng trẻ con rước đèn ngoài phố — những ký ức ấy không phai theo năm tháng, dù Son Nguyen đã rời Việt Nam hàng nghìn kilomet.</p>
+      <p>Tản văn về Trung Thu không phải là hoài niệm đơn thuần. Đó là suy nghĩ về bản sắc, về việc là người Việt ở xứ người, về những gì ta giữ lại và những gì ta thay đổi khi hội nhập vào một nền văn hóa mới.</p>
+      <blockquote>"Trung Thu là cái cớ để tôi viết về mẹ, về phố cũ, về những thứ chỉ cần mùi thôi cũng đủ để khóc."</blockquote>
+      <p><em>Viết về Trung Thu là viết về sợi chỉ vô hình nối những người xa xứ với quê hương.</em> Sợi chỉ đó không đứt theo năm tháng — nó chỉ trở nên dài hơn, và vì thế, trở nên đáng quý hơn.</p>
+
+      <h3>✈️ Melbourne vs. Saigon — Hai Thành Phố, Một Trái Tim</h3>
+      <p>Cà phê Melbourne buổi sáng lạnh 12 độ, áo len dày, sổ tay và im lặng. Phở Sài Gòn lúc nửa đêm nóng hổi, tiếng xe máy, mồ hôi và sự sống. Hai hình ảnh không thể khác nhau hơn — nhưng cả hai đều là Son Nguyen.</p>
+      <p>Bài viết "Melbourne vs. Saigon" không phải là bài so sánh hơn thua. Đó là tuyên ngôn của một người đàn ông chọn thuộc về nhiều hơn một nơi chốn — và tìm thấy sự phong phú trong chính sự không thuộc về trọn vẹn ấy.</p>
+      <p>Melbourne cho Son không gian để suy nghĩ chậm, để lập kế hoạch dài hạn, để thấy cuộc đời rộng hơn. Sài Gòn cho Son năng lượng sống, sự linh hoạt, và nhắc nhở rằng mọi cơ hội có thể biến mất trong nháy mắt. <em>Không phải chọn một, mà là học cách là cả hai.</em></p>
+
+      <h3>✍️ Nhà Văn Thời Vụ — Triết Lý Viết</h3>
+      <p>Son Nguyen tự gọi mình là "nhà văn thời vụ" — không phải vì thiếu tài năng, mà vì viết lách với ông là một hành động cá nhân, không phải nghề nghiệp. Không có deadline, không có biên tập, không có áp lực thương mại.</p>
+      <blockquote>"Tôi viết không phải để được nhớ đến, mà để bản thân không quên. Mỗi trang viết là một căn phòng lưu giữ những khoảnh khắc mà thời gian muốn lấy đi."</blockquote>
+      <p>Triết lý viết của Son phản ánh triết lý sống: chân thực, không trình diễn, và luôn có một câu hỏi lớn hơn đằng sau mỗi câu chuyện nhỏ. <em>Mỗi tản văn là một lần Son Nguyen thành thật với chính mình.</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Family -->
+<div class="detail-modal" id="modal-family" role="dialog" aria-modal="true" aria-label="Family Detail">
+  <button class="modal-close" onclick="closeModal('family')">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Quay Lại Tổng Quan
+  </button>
+  <div class="modal-inner">
+    <span class="modal-eyebrow">Life · Family &amp; Lifestyle</span>
+    <h2 class="modal-title">Family &amp; Lifestyle</h2>
+    <div class="modal-rule"></div>
+    <div class="modal-article">
+      <span class="modal-tag">Melbourne</span><span class="modal-tag">Vietnam</span><span class="modal-tag">Legacy</span>
+
+      <h3>🌏 Melbourne ↔ Vietnam — Đặc Ân Của Người Hai Quê Hương</h3>
+      <p>Hỏi Son Nguyen quê hương của ông ở đâu, câu trả lời sẽ không bao giờ là một từ. Melbourne — thành phố cho ông không gian, sự an toàn, và cơ hội để xây dựng một cuộc sống theo cách mình chọn. Việt Nam — đất nước cho ông hồn, ngôn ngữ, và ký ức không thể thay thế.</p>
+      <p>Sống giữa hai bờ không phải là sự lưỡng lự. Đó là đặc ân của những người dám rời đi và đủ trí tuệ để mang theo những gì quan trọng nhất. <em>Son Nguyen là người Việt Nam sống ở Melbourne — không phải người Việt "mất gốc" hay người Úc "gốc Việt".</em> Ông là cả hai, và tự hào về điều đó.</p>
+
+      <h3>♥ Hà Lê — Người Đứng Sau Và Đứng Cùng</h3>
+      <p>Trong mọi câu chuyện về thành công, thường có một người mà tên họ ít xuất hiện nhất — nhưng sự hiện diện của họ lại là nền tảng cho mọi thứ khác. Với Son Nguyen, đó là Hà Lê.</p>
+      <p>Hà Lê không đứng sau Son vì bị che khuất. Bà chọn là nền tảng — vững chắc, kiên định, và không ồn ào. Trong những chuyến bay dài giữa Melbourne và TP.HCM, trong những đêm thương trường căng thẳng, trong những buổi sáng tập BJJ khi cả thế giới còn ngủ — Hà Lê là lý do để trở về.</p>
+      <blockquote>"Thành công thực sự không phải là điều bạn đạt được, mà là người bạn trở thành — và ai đang ở bên bạn khi bạn về đến nhà."</blockquote>
+
+      <h3>🏢 Jim Nguyen — Thế Hệ Kế Tiếp</h3>
+      <p>Jim Nguyen, con trai của Son, đang xây dựng con đường riêng trong lĩnh vực bất động sản tại Melbourne. Đây không phải là sự ngẫu nhiên — đó là kết quả của một gia đình luôn tin rằng <em>xây dựng di sản không phải bằng lời nói, mà bằng cách làm gương mỗi ngày.</em></p>
+      <p>Son Nguyen không áp đặt con đường cho Jim — ông chỉ sống theo những giá trị mà ông tin tưởng: kỷ luật, kiên nhẫn, trung thực, và không bao giờ ngừng học hỏi. Jim nhìn thấy cha mình thức dậy sớm để tập BJJ, gặp gỡ khách hàng, đọc sách, và viết — và Jim chọn con đường của chính mình với cùng tinh thần đó.</p>
+      <p>Đó là di sản thực sự. Không phải tài sản, không phải tên tuổi — mà là <em>cách một thế hệ truyền lại cho thế hệ sau không phải của cải, mà là nhân cách.</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+/* ── Navigation scroll effect ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+/* ── Hamburger menu ── */
+const ham  = document.getElementById('ham');
+const mob  = document.getElementById('mob-nav');
+const hb1  = document.getElementById('hb1');
+const hb2  = document.getElementById('hb2');
+const hb3  = document.getElementById('hb3');
+let menuOpen = false;
+
+ham.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mob.style.display = menuOpen ? 'block' : 'none';
+  hb1.style.transform = menuOpen ? 'translateY(6.5px) rotate(45deg)' : '';
+  hb2.style.opacity   = menuOpen ? '0' : '1';
+  hb3.style.transform = menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : '';
+});
+mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  menuOpen = false;
+  mob.style.display = 'none';
+  hb1.style.transform = hb3.style.transform = '';
+  hb2.style.opacity = '1';
+}));
+
+/* ── Scroll reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── Modal system ── */
+let activeModal = null;
+let scrollPos   = 0;
+
+function openModal(section) {
+  const modal = document.getElementById('modal-' + section);
+  if (!modal) return;
+  // Lock body scroll
+  scrollPos = window.scrollY;
+  document.body.style.overflow  = 'hidden';
+  document.body.style.position  = 'fixed';
+  document.body.style.top       = '-' + scrollPos + 'px';
+  document.body.style.width     = '100%';
+  // Reset scroll inside modal
+  modal.scrollTop = 0;
+  // Open
+  modal.classList.add('open');
+  activeModal = section;
+  modal.querySelector('.modal-close').focus();
+}
+
+function closeModal(section) {
+  const modal = document.getElementById('modal-' + (section || activeModal));
+  if (!modal) return;
+  modal.classList.remove('open');
+  // Restore body scroll
+  document.body.style.overflow  = '';
+  document.body.style.position  = '';
+  document.body.style.top       = '';
+  document.body.style.width     = '';
+  window.scrollTo(0, scrollPos);
+  activeModal = null;
+}
+
+// Escape key closes modal
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && activeModal) closeModal(activeModal);
+});
+
+// Click outside modal-inner closes it
+document.querySelectorAll('.detail-modal').forEach(m => {
+  m.addEventListener('click', e => {
+    if (e.target === m) closeModal(m.id.replace('modal-', ''));
+  });
+});
+
+/* ── Contact form ── */
+document.getElementById('submitBtn').addEventListener('click', function () {
+  this.textContent = '✓ Đã Gửi — Cảm Ơn Bạn!';
+  this.style.background = 'linear-gradient(135deg,#3d7050,#2d5a3d)';
+  this.style.color = 'var(--cream)';
+  setTimeout(() => {
+    this.textContent = 'Gửi Tin Nhắn';
+    this.style.background = '';
+    this.style.color = '';
+  }, 3000);
+});
+</script>
+</body>
+</html>
